@@ -6,15 +6,15 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-        bucket = "terra001bucket"
+        bucket = "nprod001"
         key = "terraform.tfstate"
         region = "us-east-1"
-        profile = "staging"
+        profile = "nprod"
     }
 }
 
 module "rds_instance" {
-  source = "./modules/rds_db_instance"
+  source = "../../modules/rds_db_instance"
 
   rds_instance_identifier   = "${var.rds_instance_identifier}"
   storage_type              = "${var.storage_type}"
