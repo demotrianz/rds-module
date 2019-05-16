@@ -7,7 +7,7 @@ pipeline {
 
     parameters {
         choice(name: 'action', choices: 'plan\napply\ndestroy', description: 'Create/update or destroy the AWS Infra.')
-        string(name: 'environment', defaultValue : 'nprod', description: "GEHC ODP Plaform eenvironment.")
+        string(name: 'environment', defaultValue : 'nprod', description: "GEHC ODP Plaform environment.")
     }
 
    /* options {
@@ -48,7 +48,9 @@ pipeline {
                 sh """
                    cd environments/nprod
                    terraform init
-                   terraform plan -input=false -out ${plan}
+                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                  // terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+
                    terraform show $plan
                    """
             }
@@ -62,14 +64,16 @@ pipeline {
                 sh """
                    cd environments/nprod
                    terraform init
-                   terraform plan -input=false -out ${plan}
+                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+		   //terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                    """
             script {
               input "Create/update Terraform stack for GEHC ODP ${params.environment} env in aws?" 
 
                 sh """
                   cd environments/nprod
-                  terraform apply -input=false -auto-approve ${plan}
+                  terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+		  //terraform apply --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                 """
             }
           }
