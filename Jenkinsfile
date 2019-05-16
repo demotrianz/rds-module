@@ -47,11 +47,11 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                   terraform init
-                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                  sudo terraform init
+                  sudo terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                   // terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 
-                   terraform show $plan
+                   sudo terraform show $plan
                    """
             }
         }
@@ -63,8 +63,8 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                   terraform init
-                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                   sudo terraform init
+                   sudo terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 		   //terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                    """
             script {
@@ -72,7 +72,7 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                  sudo terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 		  //terraform apply --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                 """
             }
@@ -86,15 +86,15 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                   terraform init
-                   terraform show
+                   sudo terraform init
+                   sudo terraform show
                    """            
             script {
               input "Destroy Terraform stack for GEHC ODP ${params.environment} env in aws?" 
 
                 sh """
                   cd environments/nprod
-                  terraform destroy -auto-approve
+                  sudo terraform destroy -auto-approve
                 """
             }
           }
