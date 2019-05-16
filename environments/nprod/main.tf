@@ -9,7 +9,10 @@ terraform {
         bucket = "nprod001"
         key = "terraform.tfstate"
         region = "us-east-1"
-        shared_credentials_file = "/root/.aws/credentials"
+        access_key = "AWS_ACCESS_KEY_ID"
+        secret_key = "AWS_SECRET_ACCESS_KEY"
+        
+        #shared_credentials_file = "/root/.aws/credentials"
         #profile = "nprod"
     }
 }
