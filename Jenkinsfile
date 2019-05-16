@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    environment {
+    /* environment {
         JENKINS_USER_PASS = credentials("jenkinsuser")
-    }
+    }*/
 
     parameters {
         choice(name: 'action', choices: 'plan\napply\ndestroy', description: 'Create/update or destroy the AWS Infra.')
