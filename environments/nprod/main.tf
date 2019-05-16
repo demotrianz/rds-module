@@ -9,7 +9,7 @@ terraform {
         bucket = "nprod001"
         key = "terraform.tfstate"
         region = "us-east-1"
-        shared_credentials_file = "~/.aws/credentials"
+        shared_credentials_file = "/root/.aws/config"
         profile = "nprod"
     }
 }
