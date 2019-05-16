@@ -10,7 +10,7 @@ pipeline {
         string(name: 'environment', defaultValue : 'nprod', description: "GEHC ODP Plaform environment.")
     }
 
-   /* options {
+    options {
       disableConcurrentBuilds()
       timeout(time: 1, unit: 'HOURS')
       ansiColor('xterm')
@@ -18,7 +18,7 @@ pipeline {
 
     stages {
 
-        stage('Authenticate SSO for AWS role') {
+     /*   stage('Authenticate SSO for AWS role') {
             steps {
                 sh "python3 /usr/local/bin/gaws.py 503125591 --profile default --account 400123706343 --role bu-power-user --region eu-west-1 --passwd ${JENKINS_USER_PASS}"
             }
