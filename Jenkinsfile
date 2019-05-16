@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        JENKINS_USER_PASS = credentials("jenkinsuser")
+        //JENKINS_USER_PASS = credentials("jenkinsuser")
     }
 
     parameters {
