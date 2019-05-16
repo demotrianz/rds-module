@@ -10,11 +10,11 @@ pipeline {
         string(name: 'environment', defaultValue : 'nprod', description: "GEHC ODP Plaform environment.")
     }
 
-    options {
+    /*options {
       disableConcurrentBuilds()
       timeout(time: 1, unit: 'HOURS')
       ansiColor('xterm')
-    }
+    }*/
 
     stages {
 
