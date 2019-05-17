@@ -7,7 +7,7 @@ pipeline {
 
     parameters {
         choice(name: 'action', choices: 'plan\napply\ndestroy', description: 'Create/update or destroy the AWS Infra.')
-        string(name: 'environment', defaultValue : 'nprod', description: "GEHC ODP Plaform environment.")
+        string(name: 'environment', defaultValue : 'release', description: "GEHC ODP Plaform environment.")
     }
 
     /*options {
@@ -39,10 +39,10 @@ pipeline {
           }
           steps {
                 sh """
-                  cd environments/nprod
+                  cd environments/release
                   terraform init -input=false
                   terraform workspace select default
-                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/rds.tfvars"
+                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
                   terraform show $plan
                    """
             }
@@ -54,15 +54,15 @@ pipeline {
           }
           steps {
                 sh """
-                   cd environments/nprod
+                   cd environments/release
                    terraform init -input=false
-                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/rds.tfvars"
+                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
                                    """
             script {
               input "Create/update Terraform stack for GEHC ODP ${params.environment} env in aws?" 
 
                 sh """
-                 cd environments/nprod
+                 cd environments/release
                   terraform apply -input=false --auto-approve ${plan}
                    """
             }
@@ -75,7 +75,7 @@ pipeline {
           }
           steps {
                 sh """
-                   cd environments/nprod
+                   cd environments/release
                    terraform init -input=false
                    terraform show
                    """            
@@ -83,8 +83,8 @@ pipeline {
               input "Destroy Terraform stack for GEHC ODP ${params.environment} env in aws?" 
 
                 sh """
-                  cd environments/nprod
-                  terraform destroy --auto-approve --var-file="/var/lib/jenkins/tfvars/nprod/rds.tfvars"
+                  cd environments/release
+                  terraform destroy --auto-approve --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
                   """
             }
           }
@@ -97,3 +97,4 @@ pipeline {
         }
     }
 }
+
