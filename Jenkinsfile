@@ -48,7 +48,7 @@ pipeline {
                 sh """
                    cd environments/nprod
                   terraform init
-                  terraform plan -input=false -out ${plan} --var-file="C:\terraform.tfvars"
+                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                   // terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 
                    sudo terraform show $plan
@@ -64,7 +64,7 @@ pipeline {
                 sh """
                    cd environments/nprod
                    terraform init
-                   terraform plan -input=false -out ${plan} --var-file="C:\terraform.tfvars"
+                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 		   //terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                    """
             script {
@@ -72,7 +72,7 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  terraform apply -input=false -auto-approve ${plan} --var-file="C:\terraform.tfvars"
+                  terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 		  //terraform apply --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                 """
             }
