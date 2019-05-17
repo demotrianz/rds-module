@@ -10,11 +10,11 @@ pipeline {
         string(name: 'environment', defaultValue : 'nprod', description: "GEHC ODP Plaform environment.")
     }
 
-    /*options {
+    options {
       disableConcurrentBuilds()
       timeout(time: 1, unit: 'HOURS')
       ansiColor('xterm')
-    }*/
+    }
 
     stages {
         stage('Setup') {
@@ -40,8 +40,8 @@ pipeline {
           steps {
                 sh """
                   cd environments/nprod
-                                  terraform workspace select rds 
                   terraform init -input=false
+                  terraform workspace select rds
                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
                   terraform show $plan
                    """
@@ -76,7 +76,7 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                   terraform init
+                   terraform init -input=false
                    terraform show
                    """            
             script {
