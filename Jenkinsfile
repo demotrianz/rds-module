@@ -47,8 +47,8 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                  sudo terraform init
-                  sudo terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                  terraform init
+                  terraform plan -input=false -out ${plan} --var-file="C:\terraform.tfvars"
                   // terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
 
                    sudo terraform show $plan
@@ -63,8 +63,8 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                   sudo terraform init
-                   sudo terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                   terraform init
+                   terraform plan -input=false -out ${plan} --var-file="C:\terraform.tfvars"
 		   //terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                    """
             script {
@@ -72,7 +72,7 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  sudo terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
+                  terraform apply -input=false -auto-approve ${plan} --var-file="C:\terraform.tfvars"
 		  //terraform apply --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
                 """
             }
@@ -94,7 +94,7 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  sudo terraform destroy -auto-approve
+                  terraform destroy -auto-approve
                 """
             }
           }
@@ -103,7 +103,7 @@ pipeline {
     post {
         always {
             echo 'Clean up workspace'
-            // deleteDir()
+            deleteDir()
         }
     }
 }
