@@ -6,7 +6,7 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-        bucket = "terra001bucket"
+        bucket = "release001"
         key = "terraform.tfstate"
         region = "us-east-1"
         // profile = "nprod"
