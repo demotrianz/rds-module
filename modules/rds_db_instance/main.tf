@@ -17,7 +17,7 @@ resource "aws_db_subnet_group" "default" {
 }
 
 resource "aws_security_group" "rds" {
-  name        = "terraform_rds_security_group"
+  name        = "${var.rds_instance_identifier}-security_group"
   description = "Terraform example RDS MySQL server"
   vpc_id      = "${var.existing_vpc}"
   # Keep the instance private by only allowing traffic from the web server.
