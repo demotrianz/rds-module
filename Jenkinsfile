@@ -41,7 +41,7 @@ pipeline {
                 sh """
                   cd environments/nprod
                   terraform init -input=false
-                  terraform workspace select rds
+                  terraform workspace select default
                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
                   terraform show $plan
                    """
