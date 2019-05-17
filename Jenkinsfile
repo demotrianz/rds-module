@@ -17,13 +17,6 @@ pipeline {
     }*/
 
     stages {
-
-     /*   stage('Authenticate SSO for AWS role') {
-            steps {
-                sh "python3 /usr/local/bin/gaws.py 503125591 --profile default --account 400123706343 --role bu-power-user --region eu-west-1 --passwd ${JENKINS_USER_PASS}"
-            }
-        } */
-
         stage('Setup') {
           steps {
             script {
@@ -40,18 +33,17 @@ pipeline {
         }
 
         stage('TF Plan') {
- 
+
           when {
             expression { params.action == 'plan' }
           }
           steps {
                 sh """
-                   cd environments/nprod
-                  terraform init
-                  // terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
-                  terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
-
-                   sudo terraform show $plan
+                  cd environments/nprod
+                                  terraform workspace select rds 
+                  terraform init -input=false
+                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
+                  terraform show $plan
                    """
             }
         }
@@ -63,18 +55,16 @@ pipeline {
           steps {
                 sh """
                    cd environments/nprod
-                   terraform init
-                  // terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
-		   terraform plan --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
-                   """
+                   terraform init -input=false
+                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
+                                   """
             script {
               input "Create/update Terraform stack for GEHC ODP ${params.environment} env in aws?" 
 
                 sh """
-                  cd environments/nprod
-                 // terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
-		  terraform apply --var-file="/var/lib/jenkins/tfvars/nprod/terraform.tfvars"
-                """
+                 cd environments/nprod
+                  terraform apply -input=false -auto-approve ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
+                                  """
             }
           }
         }
@@ -94,8 +84,8 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  terraform destroy -auto-approve
-                """
+                  terraform destroy -auto-approve --var-file="/var/lib/jenkins/rds.tfvars"
+                  """
             }
           }
        }
@@ -103,7 +93,6 @@ pipeline {
     post {
         always {
             echo 'Clean up workspace'
-            // deleteDir()
+            deleteDir()
         }
     }
-}
