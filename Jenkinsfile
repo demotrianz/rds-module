@@ -42,7 +42,7 @@ pipeline {
                   cd environments/nprod
                   terraform init -input=false
                   terraform workspace select default
-                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
+                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/rds.tfvars"
                   terraform show $plan
                    """
             }
@@ -56,7 +56,7 @@ pipeline {
                 sh """
                    cd environments/nprod
                    terraform init -input=false
-                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/rds.tfvars"
+                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/nprod/rds.tfvars"
                                    """
             script {
               input "Create/update Terraform stack for GEHC ODP ${params.environment} env in aws?" 
@@ -84,7 +84,7 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  terraform destroy --auto-approve --var-file="/var/lib/jenkins/rds.tfvars"
+                  terraform destroy --auto-approve --var-file="/var/lib/jenkins/tfvars/nprod/rds.tfvars"
                   """
             }
           }
