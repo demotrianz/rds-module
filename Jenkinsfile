@@ -63,7 +63,7 @@ pipeline {
 
                 sh """
                  cd environments/nprod
-                  terraform apply -input=false -auto-approve ${plan}
+                  terraform apply -input=false --auto-approve ${plan}
                    """
             }
           }
@@ -84,7 +84,7 @@ pipeline {
 
                 sh """
                   cd environments/nprod
-                  terraform destroy -auto-approve --var-file="/var/lib/jenkins/rds.tfvars"
+                  terraform destroy --auto-approve --var-file="/var/lib/jenkins/rds.tfvars"
                   """
             }
           }
