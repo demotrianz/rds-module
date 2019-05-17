@@ -9,7 +9,7 @@ terraform {
         bucket = "terra001bucket"
         key = "terraform.tfstate"
         region = "us-east-1"
-        profile = "nprod"
+        profile = "staging"
     }
 }
 
