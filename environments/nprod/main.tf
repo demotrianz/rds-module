@@ -9,7 +9,9 @@ terraform {
         bucket = "terra001bucket"
         key = "terraform.tfstate"
         region = "us-east-1"
-        profile = "staging"
+        //profile = "staging"
+        access_key = "AKIAZGBKAQECPDWRAY7S"
+        secret_key = "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"
     }
 }
 
