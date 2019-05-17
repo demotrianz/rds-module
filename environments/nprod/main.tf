@@ -9,9 +9,9 @@ terraform {
         bucket = "terra001bucket"
         key = "terraform.tfstate"
         region = "us-east-1"
-        // profile = "staging"
-        access_key = ""
-       secret_key = ""
+        profile = "nprod"
+        // access_key = ""
+       // secret_key = ""
     }
 }
 
