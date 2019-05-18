@@ -21,7 +21,7 @@ pipeline {
           steps {
             script {
               currentBuild.displayName = "#" + env.BUILD_NUMBER + " " + params.action + "-" + params.environment
-              plan = params.environment + '.plan'
+              plan1 = params.environment + '.plan'
             }
           }
         }
@@ -35,15 +35,15 @@ pipeline {
         stage('TF Plan') {
 
           when {
-            expression { params.action == 'plan' }
+            expression { params.action == 'plan1' }
           }
           steps {
                 sh """
                   cd environments/release
                   terraform init -input=false
                   terraform workspace select default
-                  terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
-                  terraform show $plan
+                  terraform plan -input=false -out ${plan1} --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
+                  terraform show $plan1
                    """
             }
         }
@@ -56,14 +56,14 @@ pipeline {
                 sh """
                    cd environments/release
                    terraform init -input=false
-                   terraform plan -input=false -out ${plan} --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
+                   terraform plan -input=false -out ${plan1} --var-file="/var/lib/jenkins/tfvars/release/rds.tfvars"
                                    """
             script {
               input "Create/update Terraform stack for GEHC ODP ${params.environment} env in aws?" 
 
                 sh """
                  cd environments/release
-                  terraform apply -input=false --auto-approve ${plan}
+                  terraform apply -input=false --auto-approve ${plan1}
                    """
             }
           }
