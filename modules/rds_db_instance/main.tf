@@ -59,7 +59,7 @@ resource "aws_db_instance" "default" {
   final_snapshot_identifier = "${var.final_snapshot_identifier}"
 
   tags {
-    Name = "terraform-${var.database_name}"
+    Name = "terraform-${var.rds_instance_identifier}"
   }
 }
 
