@@ -10,8 +10,8 @@ terraform {
         key = "terraform.tfstate"
         region = "us-east-1"
         // profile = "nprod"
-        access_key = ""
-        secret_key = ""
+        access_key = "AKIAZGBKAQECG4LJS7OO"
+        secret_key = "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"
     }
 }
 
